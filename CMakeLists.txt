@@ -3,17 +3,11 @@ project(ptex)
 
 include(GNUInstallDirs)
 include(CTest)
-include(FindZLIB)
-include(FindThreads)
+
+find_package(ZLIB REQUIRED)
+find_package(Threads REQUIRED)
 
 enable_testing()
-
-# Detect the build type from the $FLAVOR environment variable
-if ("$ENV{FLAVOR}" MATCHES "debug")
-    set(CMAKE_BUILD_TYPE "Debug" CACHE STRING "type of build" FORCE)
-else ()
-    set(CMAKE_BUILD_TYPE "Release" CACHE STRING "type of build" FORCE)
-endif ()
 
 if (NOT WIN32)
     set(CMAKE_CXX_FLAGS "-std=c++98 -Wall -Wextra -pedantic ${CMAKE_CXX_FLAGS}")
@@ -21,7 +15,6 @@ endif ()
 
 if(MSVC)
     add_definitions(
-
         #warning C4800: 'BOOL': forcing value to bool 'true' or 'false' (performance warning)
         /wd4800 
 
