@@ -12,8 +12,18 @@ add_library(ptex
 )
 
 if (WIN32)
-  target_compile_definitions(ptex /DPTEX_EXPORTS)
+  target_compile_definitions(ptex
+    PRIVATE
+      PTEX_EXPORTS
+  )
 endif (WIN32)
+
+if (NOT BUILD_SHARED_LIBS)
+  target_compile_definitions(ptex
+    PRIVATE
+      PTEX_STATIC
+  )
+endif()
 
 target_link_libraries(ptex ${CMAKE_THREAD_LIBS_INIT} ${ZLIB_LIBRARIES})
 
