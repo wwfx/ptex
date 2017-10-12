@@ -20,7 +20,7 @@ endif (WIN32)
 
 if (NOT BUILD_SHARED_LIBS)
   target_compile_definitions(ptex
-    PRIVATE
+    PUBLIC
       PTEX_STATIC
   )
 endif()
