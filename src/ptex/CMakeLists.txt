@@ -11,21 +11,23 @@ add_library(ptex
   PtexWriter.cpp
 )
 
-if (WIN32)
-  target_compile_definitions(ptex
-    PRIVATE
-      PTEX_EXPORTS
-  )
-endif (WIN32)
+include(GenerateExportHeader)
+generate_export_header(ptex
+  EXPORT_FILE_NAME PtexExport.h
+  EXPORT_MACRO_NAME PTEXAPI
+  STATIC_DEFINE PTEX_STATIC
+)
 
-if (NOT BUILD_SHARED_LIBS)
-  target_compile_definitions(ptex
-    PUBLIC
-      PTEX_STATIC
-  )
-endif()
+target_include_directories(ptex
+  PUBLIC
+    ${CMAKE_CURRENT_BINARY_DIR}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
 
-target_link_libraries(ptex ${CMAKE_THREAD_LIBS_INIT} ${ZLIB_LIBRARIES})
+target_link_libraries(ptex 
+  Threads::Threads
+  ZLIB::ZLIB
+)
 
 install(
   TARGETS
@@ -35,6 +37,7 @@ install(
 )
 install(
   FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/PtexExport.h
     PtexHalf.h
     PtexInt.h
     Ptexture.h

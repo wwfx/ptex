@@ -53,6 +53,7 @@ int main()
     uint32_t h2fTable[65536];
     uint16_t f2hTable[512];
     PtexHalfInit(h2fTable, f2hTable);
+    fprintf(fp, "include \"PtexExport.h\"");
     fprintf(fp, "PTEXAPI uint32_t PtexHalf::h2fTable[65536] = {");
     for (int i = 0; i < 65536; i++) {
         if (i % 8 == 0) fprintf(fp, "\n");
